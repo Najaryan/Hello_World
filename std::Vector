@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+template <typename Container>
+void populatecontainer(Container& cont)
+{
+	int num;
+
+	while (true)
+	{
+		std::cout << "Vvedite chislo dlq napolneniq containera (0 dlq vixoda): ";
+		std::cin >> num;
+
+		if (num == 0)
+		{
+			break;
+		}
+
+		cont.push_back(num);
+	}
+
+}
+
+void print(int elem)
+{
+	std::cout << elem << " ";
+}
+
+int main(int argc, char** argv)
+{
+	std::vector<int> vectorOne, vectorTwo, vectorMerged;
+	
+	std::cout << "Vvegite znachenie dlq pervogo vectora" << std::endl;
+	populatecontainer(vectorOne);
+
+	std::cout << "Vvedite znachenie dlq vtorogo vectora" << std::endl;
+	populatecontainer(vectorTwo);
+
+	std::sort(vectorOne.begin(), vectorOne.end());
+	std::sort(vectorTwo.begin(), vectorTwo.end());
+
+	vectorMerged.resize(vectorOne.size() + vectorTwo.size());
+	std::merge(vectorOne.begin(), vectorOne.end(), vectorTwo.begin(), 
+		       vectorTwo.end(), vectorMerged.begin());
+	std::cout << "Obedenionnij vector" << std::endl;
+	std::for_each(vectorMerged.begin(), vectorMerged.end(), &print);
+
+	std::cout << std::endl;
+
+	while (true)
+	{
+		int num;
+
+		std::cout << "Vvedite iskomoe chislo (0 dlq ostanova): ";
+		std::cin >> num;
+
+		if (num == 0)
+		{
+			break;
+		}
+
+		if (std::binary_search(vectorMerged.begin(), vectorMerged.end(), num) )
+		{
+			std::cout << "eto chislo soderjitsq v vectore" << std::endl;
+		}
+		else
+		{
+			std::cout << "eto chislo ne soderjitsq v vectore" << std::endl;
+		}
+
+	}
+     
+	return 0;
+}
